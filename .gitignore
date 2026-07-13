@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual Environment
+venv/
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Python caches
+.pytest_cache/
+.mypy_cache/
+
+# Streamlit cache
+.streamlit/
+
+# Excel temp files
+~$*.xlsx
