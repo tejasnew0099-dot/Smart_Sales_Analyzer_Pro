@@ -111,6 +111,37 @@ def category_sales_chart(df):
 
     return fig
 
+def brand_sales_chart(df):
+    """
+    Brand-wise Sales
+    """
+
+    brand = (
+        df.groupby("Brand")["Net Sales"]
+        .sum()
+        .reset_index()
+        .sort_values(
+            by="Net Sales",
+            ascending=False
+        )
+    )
+
+    fig = px.bar(
+        brand,
+        x="Brand",
+        y="Net Sales",
+        title="Brand-wise Sales",
+        text_auto=".2s"
+    )
+
+    fig.update_layout(
+        xaxis_title="Brand",
+        yaxis_title="Net Sales",
+        height=450
+    )
+
+    return fig
+
 
 # --------------------------------------------------
 # Top 10 Products
