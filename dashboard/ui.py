@@ -33,3 +33,73 @@ def show_header():
     st.title("📊 Smart Sales Analyzer Pro")
 
     st.caption("Executive Business Intelligence Dashboard")
+
+
+def show_kpis(kpis):
+    """
+    Display KPI Cards
+    """
+
+    row1 = st.columns(4)
+
+    with row1[0]:
+        st.metric(
+            "💰 Total Sales",
+            format_currency(kpis["Total Sales"])
+        )
+
+    with row1[1]:
+        st.metric(
+            "📈 Total Profit",
+            format_currency(kpis["Total Profit"])
+        )
+
+    with row1[2]:
+        st.metric(
+            "🧾 Total Orders",
+            f"{kpis['Total Orders']:,}"
+        )
+
+    with row1[3]:
+        st.metric(
+            "📊 Profit Margin",
+            f"{kpis['Profit Margin %']}%"
+        )
+
+    row2 = st.columns(4)
+
+    with row2[0]:
+        st.metric(
+            "📦 Quantity Sold",
+            f"{kpis['Quantity Sold']:,}"
+        )
+
+    with row2[1]:
+        st.metric(
+            "💵 Avg Order Value",
+            format_currency(
+                kpis["Average Order Value"]
+            )
+        )
+
+    with row2[2]:
+        st.metric(
+            "🏆 Best Region",
+            kpis["Best Region"]
+        )
+
+    with row2[3]:
+        st.metric(
+            "🥇 Best Brand",
+            kpis["Best Brand"]
+        )
+
+
+def show_summary(summary):
+    """
+    Display Executive Summary
+    """
+
+    st.divider()
+
+    st.markdown(summary)

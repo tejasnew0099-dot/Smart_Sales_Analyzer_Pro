@@ -2,7 +2,11 @@ from io import BytesIO
 
 from sidebar import show_sidebar
 
-from ui import show_header
+from ui import (
+    show_header,
+    show_kpis,
+    show_summary
+)
 
 import pandas as pd
 
@@ -13,7 +17,9 @@ import streamlit as st
 from dashboard_engine import (
     load_dashboard_data,
     calculate_dashboard_kpis,
-    executive_summary
+    executive_summary,
+    generate_business_insights,
+    business_health_score
 )
 
 from dashboard_charts import (
@@ -22,7 +28,8 @@ from dashboard_charts import (
     category_sales_chart,
     brand_sales_chart,
     top_products_chart,
-    top_customers_chart
+    top_customers_chart,
+    sales_profit_trend_chart
 )
 
 from filters import apply_filters
@@ -86,6 +93,29 @@ df = apply_filters(df)
 
 show_sidebar(df)
 
+kpis = calculate_dashboard_kpis(df)
+
+##show_header()
+
+score, health = business_health_score(kpis)
+
+st.success(f"⭐ Overall Business Health Score: {score}/100")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.write(f"**Sales:** {health['Sales']}")
+    st.write(f"**Profit Margin:** {health['Profit Margin']}")
+    st.write(f"**Average Order Value:** {health['Average Order Value']}")
+
+with col2:
+    st.write(f"**Best Region:** {health['Best Region']}")
+    st.write(f"**Best Brand:** {health['Best Brand']}")
+
+st.divider()
+
+##show_kpis(kpis)
+
 # ----------------------------
 # KPI Calculation
 # ----------------------------
@@ -101,69 +131,16 @@ kpis = calculate_dashboard_kpis(df)
 # KPI Cards
 # ----------------------------
 
-row1 = st.columns(4)
+show_kpis(kpis)
 
-with row1[0]:
-    st.metric(
-        "💰 Total Sales",
-        format_currency(
-    kpis["Total Sales"]
+show_summary(executive_summary(kpis)
 )
-    )
-
-with row1[1]:
-    st.metric(
-        "📈 Total Profit",
-     format_currency(
-    kpis["Total Profit"]
-)
-   )
-
-with row1[2]:
-    st.metric(
-        "🧾 Total Orders",
-        f"{kpis['Total Orders']:,}"
-    )
-
-with row1[3]:
-    st.metric(
-        "📊 Profit Margin",
-        f"{kpis['Profit Margin %']}%"
-    )
-
-
-row2 = st.columns(4)
-
-with row2[0]:
-    st.metric(
-        "📦 Quantity Sold",
-        f"{kpis['Quantity Sold']:,}"
-    )
-
-with row2[1]:
-    st.metric(
-        "💵 Avg Order Value",
-        format_currency(
-    kpis["Average Order Value"]
-)
-    )
-
-with row2[2]:
-    st.metric(
-        "🏆 Best Region",
-        kpis["Best Region"]
-    )
-
-with row2[3]:
-    st.metric(
-        "🥇 Best Brand",
-        kpis["Best Brand"]
-    )
-
-st.divider()
 
 st.markdown(
-    executive_summary(kpis)
+    generate_business_insights(
+        df,
+        kpis
+    )
 )
 
 excel_buffer = BytesIO()
@@ -182,6 +159,13 @@ with pd.ExcelWriter(
 excel_data = excel_buffer.getvalue()
 
 st.divider()
+
+st.subheader("📈 Sales vs Profit Trend")
+
+st.plotly_chart(
+    sales_profit_trend_chart(df),
+    use_container_width=True
+)
 
 # ----------------------------
 # Data Preview

@@ -219,3 +219,40 @@ def top_customers_chart(df):
     )
 
     return fig
+
+def sales_profit_trend_chart(df):
+    """
+    Monthly Sales vs Profit Trend
+    """
+
+    trend = (
+        df.groupby(
+            df["Invoice Date"].dt.to_period("M")
+        )[["Net Sales", "Profit"]]
+        .sum()
+        .reset_index()
+    )
+
+    trend["Invoice Date"] = (
+        trend["Invoice Date"]
+        .astype(str)
+    )
+
+    import plotly.express as px
+
+    fig = px.line(
+        trend,
+        x="Invoice Date",
+        y=["Net Sales", "Profit"],
+        markers=True,
+        title="Sales vs Profit Trend"
+    )
+
+    fig.update_layout(
+        height=500,
+        xaxis_title="Month",
+        yaxis_title="Amount (₹)",
+        legend_title=""
+    )
+
+    return fig

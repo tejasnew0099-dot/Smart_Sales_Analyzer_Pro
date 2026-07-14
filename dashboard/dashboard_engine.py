@@ -102,3 +102,87 @@ def executive_summary(kpis):
 """
 
     return summary
+
+
+def generate_business_insights(df, kpis):
+    """
+    Generate Business Insights
+    """
+
+    # Best Customer
+    top_customer = (
+        df.groupby("Customer Name")["Net Sales"]
+        .sum()
+        .idxmax()
+    )
+
+    # Highest Profit Month
+    best_month = (
+        df.groupby(
+            df["Invoice Date"].dt.month_name()
+        )["Profit"]
+        .sum()
+        .idxmax()
+    )
+
+    insights = f"""
+## 💡 Business Insights
+
+🏆 **Best Region:** {kpis["Best Region"]}
+
+🥇 **Best Brand:** {kpis["Best Brand"]}
+
+👤 **Top Customer:** {top_customer}
+
+📈 **Highest Profit Month:** {best_month}
+
+### 📌 Recommendation
+
+✅ Continue investing in **{kpis["Best Region"]}** region.
+
+✅ Increase inventory for **{kpis["Best Brand"]}**.
+
+✅ Strengthen relationships with **{top_customer}**.
+"""
+
+    return insights
+
+def business_health_score(kpis):
+    """
+    Generate Business Health Score
+    """
+
+    score = 100
+    status = {}
+
+    # Profit Margin
+    if kpis["Profit Margin %"] >= 20:
+        status["Profit Margin"] = "🟢 Healthy"
+    elif kpis["Profit Margin %"] >= 10:
+        status["Profit Margin"] = "🟡 Moderate"
+        score -= 5
+    else:
+        status["Profit Margin"] = "🔴 Needs Attention"
+        score -= 15
+
+    # Average Order Value
+    if kpis["Average Order Value"] >= 10000:
+        status["Average Order Value"] = "🟢 Excellent"
+    elif kpis["Average Order Value"] >= 5000:
+        status["Average Order Value"] = "🟡 Moderate"
+        score -= 5
+    else:
+        status["Average Order Value"] = "🔴 Low"
+        score -= 10
+
+    # Sales
+    if kpis["Total Sales"] >= 10_000_000:
+        status["Sales"] = "🟢 Strong"
+    else:
+        status["Sales"] = "🟡 Growing"
+        score -= 5
+
+    status["Best Region"] = f"🟢 {kpis['Best Region']}"
+    status["Best Brand"] = f"🟢 {kpis['Best Brand']}"
+
+    return score, status
