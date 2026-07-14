@@ -1,8 +1,17 @@
-from dashboard.dashboard_charts import (
+import streamlit as st
+
+from dashboard_engine import (
+    load_dashboard_data,
+    calculate_dashboard_kpis
+)
+
+from dashboard_charts import (
     monthly_sales_chart,
     region_sales_chart,
-    category_sales_chart,
+    category_sales_chart
 )
+
+from filters import apply_filters
 
 
 """
@@ -48,6 +57,8 @@ st.subheader(
 # ----------------------------
 
 df = load_dashboard_data()
+
+df = apply_filters(df)
 
 
 # ----------------------------
