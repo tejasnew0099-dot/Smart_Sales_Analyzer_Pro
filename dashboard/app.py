@@ -8,7 +8,9 @@ from dashboard_engine import (
 from dashboard_charts import (
     monthly_sales_chart,
     region_sales_chart,
-    category_sales_chart
+    category_sales_chart,
+    top_products_chart,
+    top_customers_chart
 )
 
 from filters import apply_filters
@@ -150,4 +152,22 @@ st.subheader(
 
 st.dataframe(
     df.head(20)
+)
+
+st.divider()
+
+st.subheader("🏆 Top 10 Products")
+
+st.plotly_chart(
+    top_products_chart(df),
+    use_container_width=True
+)
+
+st.divider()
+
+st.subheader("👥 Top 10 Customers")
+
+st.plotly_chart(
+    top_customers_chart(df),
+    use_container_width=True
 )
