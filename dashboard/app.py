@@ -1,8 +1,14 @@
 from io import BytesIO
 
+from sidebar import show_sidebar
+
+from ui import show_header
+
 import pandas as pd
 
 import streamlit as st
+
+
 
 from dashboard_engine import (
     load_dashboard_data,
@@ -68,14 +74,7 @@ st.set_page_config(
 # Title
 # ----------------------------
 
-st.title(
-    "📊 Smart Sales Analyzer Pro v2.0"
-)
-
-st.subheader(
-    "Executive Sales Dashboard"
-)
-
+show_header()
 
 # ----------------------------
 # Load Data
@@ -85,6 +84,7 @@ df = load_dashboard_data()
 
 df = apply_filters(df)
 
+show_sidebar(df)
 
 # ----------------------------
 # KPI Calculation
