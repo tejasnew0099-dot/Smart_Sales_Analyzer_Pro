@@ -1,13 +1,17 @@
 import streamlit as st
 
-st.set_page_config(page_title="Test")
+st.title("Plotly Diagnostic")
 
-st.title("Deployment Test")
+try:
+    import plotly
+    st.success(f"Plotly imported successfully: {plotly.__version__}")
+    st.write("Location:", plotly.__file__)
+except Exception as e:
+    st.error(f"Plotly import failed: {e}")
+    st.stop()
 
-import plotly.express as px
-
-st.success("✅ Plotly imported successfully")
-
-from dashboard_charts import monthly_sales_chart
-
-st.success("✅ dashboard_charts imported successfully")
+try:
+    import plotly.express as px
+    st.success("plotly.express imported successfully")
+except Exception as e:
+    st.error(f"plotly.express import failed: {e}")
