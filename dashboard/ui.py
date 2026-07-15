@@ -25,14 +25,35 @@ def format_currency(value):
         return f"₹ {value:,.2f}"
 
 
+from datetime import datetime
+
 def show_header():
     """
-    Dashboard Header
+    Professional Dashboard Header
     """
 
-    st.title("📊 Smart Sales Analyzer Pro")
+    col1, col2 = st.columns([4, 1])
 
-    st.caption("Executive Business Intelligence Dashboard")
+    with col1:
+
+        st.title("📊 Smart Sales Analyzer Pro")
+
+        st.caption(
+            "Executive Business Intelligence Platform"
+        )
+
+    with col2:
+
+        st.metric(
+            "Version",
+            "4.5"
+        )
+
+    st.caption(
+        f"🕒 Last Refreshed: {datetime.now().strftime('%d %b %Y | %I:%M %p')}"
+    )
+
+    st.divider()
 
 
 def show_kpis(kpis):
@@ -103,3 +124,22 @@ def show_summary(summary):
     st.divider()
 
     st.markdown(summary)
+
+def show_footer():
+    """
+    Professional Dashboard Footer
+    """
+
+    st.divider()
+
+    st.caption(
+        "📊 Smart Sales Intelligence Platform | Version 4.5"
+    )
+
+    st.caption(
+        "Developed by Tejas Patel"
+    )
+
+    st.caption(
+        "Powered by Python • Streamlit • Pandas • Plotly"
+    )

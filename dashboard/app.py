@@ -2,10 +2,13 @@ from io import BytesIO
 
 from sidebar import show_sidebar
 
+from ai_assistant import answer_question
+
 from ui import (
     show_header,
     show_kpis,
-    show_summary
+    show_summary,
+    show_footer
 )
 
 import pandas as pd
@@ -160,12 +163,39 @@ excel_data = excel_buffer.getvalue()
 
 st.divider()
 
+st.divider()
+
+st.subheader("🤖 Ask Your Sales Data")
+
+questions = [
+    "Which region generated the highest sales?",
+    "Who is the top customer?",
+    "Which brand performs the best?",
+    "Which region performs the best?"
+]
+
+selected_question = st.selectbox(
+    "Choose a business question",
+    questions
+)
+
+if st.button("💬 Get Answer", use_container_width=True):
+    answer = answer_question(
+        selected_question,
+        df,
+        kpis
+    )
+
+    st.success(answer)
+
 st.subheader("📈 Sales vs Profit Trend")
 
 st.plotly_chart(
     sales_profit_trend_chart(df),
     use_container_width=True
 )
+
+
 
 # ----------------------------
 # Data Preview
@@ -287,3 +317,5 @@ st.plotly_chart(
     top_customers_chart(df),
     use_container_width=True
 )
+
+show_footer()

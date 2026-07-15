@@ -1,6 +1,8 @@
-pandas
-openpyxl
-matplotlib
-numpy
-faker
-python-dateutil
+streamlit==1.47.0
+pandas==2.3.1
+plotly==6.2.0
+openpyxl==3.1.5
+numpy==2.3.1
+matplotlib==3.10.5
+faker==37.4.2
+python-dateutil==2.9.0.post0
