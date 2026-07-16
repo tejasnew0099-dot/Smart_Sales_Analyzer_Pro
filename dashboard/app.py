@@ -1,7 +1,6 @@
 import streamlit as st
+import pandas as pd
 
-st.set_page_config(page_title="Test")
+st.title("Test")
 
-st.title("Render Test")
-
-st.success("App is running successfully.")
+st.success("Pandas imported successfully")
