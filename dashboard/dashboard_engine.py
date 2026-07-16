@@ -7,18 +7,12 @@ Dashboard Data Engine
 import pandas as pd
 
 
-def load_dashboard_data(
-    file_path="data/Sales_Data_New.xlsx"
-):
+def load_dashboard_data(file_path="data/Sales_Data.csv"):
+    df = pd.read_csv(file_path)
 
-    df = pd.read_excel(file_path)
-
-    df["Invoice Date"] = pd.to_datetime(
-        df["Invoice Date"]
-    )
+    df["Invoice Date"] = pd.to_datetime(df["Invoice Date"])
 
     return df
-
 
 
 def calculate_dashboard_kpis(df):

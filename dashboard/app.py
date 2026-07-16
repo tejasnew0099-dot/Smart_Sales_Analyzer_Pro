@@ -1,11 +1,16 @@
 import streamlit as st
-from dashboard_engine import load_dashboard_data
+import pandas as pd
 
-st.title("Load Data Test")
+st.title("CSV Test")
 
-df = load_dashboard_data()
+df = pd.DataFrame({
+    "A": [1, 2, 3],
+    "B": [4, 5, 6]
+})
 
-st.success("Data loaded successfully!")
+df.to_csv("test.csv", index=False)
 
-st.write(df.shape)
-st.dataframe(df.head())
+df2 = pd.read_csv("test.csv")
+
+st.success("CSV works!")
+st.write(df2)
