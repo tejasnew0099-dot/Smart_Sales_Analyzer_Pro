@@ -26,7 +26,7 @@ LOGS_DIR = BASE_DIR / "logs"
 
 CUSTOMER_MASTER_FILE = DATA_DIR / "Customer_Master.xlsx"
 PRODUCT_MASTER_FILE = DATA_DIR / "Product_Master.xlsx"
-SALES_DATA_FILE = DATA_DIR / "Sales_Data.xlsx"
+SALES_DATA_FILE = DATA_DIR / "Sales_Data.csv"
 
 SUMMARY_SHEET = "Sales Summary"
 
