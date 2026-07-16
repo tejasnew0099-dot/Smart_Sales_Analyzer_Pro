@@ -8,12 +8,10 @@ import pandas as pd
 
 
 def load_dashboard_data(
-    file_path="data/Sales_Data.xlsx"
+    file_path="data/Sales_Data_New.xlsx"
 ):
 
-    df = pd.read_excel(
-        file_path
-    )
+    df = pd.read_excel(file_path)
 
     df["Invoice Date"] = pd.to_datetime(
         df["Invoice Date"]
