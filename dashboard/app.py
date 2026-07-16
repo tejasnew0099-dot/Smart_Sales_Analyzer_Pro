@@ -1,8 +1,11 @@
 import streamlit as st
-import pandas as pd
-
 from dashboard_engine import load_dashboard_data
 
-st.title("Test")
+st.title("Load Data Test")
 
-st.success("dashboard_engine imported successfully")
+df = load_dashboard_data()
+
+st.success("Data loaded successfully!")
+
+st.write(df.shape)
+st.dataframe(df.head())
